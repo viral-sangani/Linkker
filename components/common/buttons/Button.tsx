@@ -15,19 +15,29 @@ export const Button: React.FC<Props> = ({
   hover,
 }) => {
   if (varient === "primary") {
-    return (
-      <button
-        onClick={onClick}
-        className={`${className} font-sourceSansPro font-bold py-2 px-5 border bg-default-600 hover:bg-default-50 text-white hover:text-default-600 border-white hover:border-default-600 rounded-md transition-colors duration-200 focus:outline-none`}
-      >
-        {children}
-      </button>
-    );
+    if (hover)
+      return (
+        <button
+          onClick={onClick}
+          className={`${className} font-sourceSansPro font-bold py-2 px-5 border bg-default-500 hover:bg-default-50 text-white hover:text-default-500 border-white hover:border-default-500 rounded-lg transition-colors duration-200 focus:outline-none`}
+        >
+          {children}
+        </button>
+      );
+    else
+      return (
+        <button
+          onClick={onClick}
+          className={`${className} font-sourceSansPro font-bold py-2 px-5 border bg-default-500 hover:bg-default-400 text-white border-white rounded-lg transition-colors duration-200 focus:outline-none`}
+        >
+          {children}
+        </button>
+      );
   } else if (varient === "secondary") {
     return (
       <button
         onClick={onClick}
-        className={`${className} font-sourceSansPro font-bold py-2 px-5 border hover:bg-default-600 text-default-600 hover:text-white border-default-600 hover:border-white rounded-md transition-colors duration-200 focus:outline-none`}
+        className={`${className} font-sourceSansPro font-bold py-2 px-5 border hover:bg-default-500 text-default-500 hover:text-white border-default-500 hover:border-white rounded-lg transition-colors duration-200 focus:outline-none`}
       >
         {children}
       </button>

@@ -1,7 +1,9 @@
+import { useRouter } from "next/router";
 import { Button } from "../common/buttons/Button";
 import { TempLogo } from "../common/icons/tempLogo";
 
 export default function Header() {
+  const router = useRouter();
   return (
     <div className="flex-auto">
       <nav className="flex justify-between items-center pt-12 max-w-7xl m-auto">
@@ -33,7 +35,7 @@ export default function Header() {
           <Button
             varient="secondary"
             onClick={() => {
-              console.log("Login button clicked");
+              router.push("/signin");
             }}
           >
             LOGIN

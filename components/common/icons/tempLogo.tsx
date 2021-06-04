@@ -1,10 +1,14 @@
-export const TempLogo = () => {
+interface Props {
+  logoColor?: string;
+}
+
+export const TempLogo: React.FC<Props> = ({ logoColor }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className="h-9 w-h-9"
       viewBox="0 0 20 20"
-      fill="#3BB24D"
+      fill={`${logoColor} ? ${logoColor} : #3BB24D`}
     >
       <path
         fillRule="evenodd"

@@ -1,0 +1,29 @@
+.google-logo {
+  background-color: "#4285F4";
+  border-color: "#4285F4";
+}
+
+.google-logo:hover {
+  background-color: "#3c72c9";
+  border-color: "#3c72c9";
+}
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+
+.separator:not(:empty)::before {
+  margin-right: 1em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 1em;
+}
