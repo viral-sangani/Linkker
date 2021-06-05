@@ -1,21 +1,57 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { Button } from "../components/common/buttons/Button";
-import TextField from "../components/common/buttons/TextField";
-import { FacebookLogo } from "../components/common/icons/social/facebook";
-import { GithubLogo } from "../components/common/icons/social/github";
-import { GoogleLogo } from "../components/common/icons/social/google";
-import { TwitterLogo } from "../components/common/icons/social/twitter";
-import { TempLogo } from "../components/common/icons/tempLogo";
+import { Button } from "../../components/common/buttons/Button";
+import TextField from "../../components/common/buttons/TextField";
+import { FacebookLogo } from "../../components/common/icons/social/facebook";
+import { GithubLogo } from "../../components/common/icons/social/github";
+import { GoogleLogo } from "../../components/common/icons/social/google";
+import { TwitterLogo } from "../../components/common/icons/social/twitter";
+import { TempLogo } from "../../components/common/icons/tempLogo";
+import { delay } from "../../helper/helper";
+import { toastErr } from "../../helper/toast";
+import { validateEmail, validatePassword } from "../../helper/validator";
+import { signupWithEmailPassword } from "../../services/auth";
 
 const Signup: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [buttonText, setButtonText] = useState("Sign Up");
+
+  const signup = async () => {
+    if (!validateEmail(email)) {
+      toastErr({ message: "Invalid email, please try again." });
+      return;
+    }
+    if (!validatePassword(password)) {
+      toastErr({ message: "Invalid password, please try again." });
+      return;
+    }
+    try {
+      setButtonText("Please await... ⏳");
+      var user = await signupWithEmailPassword({ email, password });
+
+      if (user) {
+        // Found the user, redirect to process page
+        setButtonText("Almost Done 😎");
+        await delay(1000);
+        router.push("/signup/process");
+      } else {
+        // User not found, show signup button again
+        setButtonText("Sign Up");
+        toastErr({ message: "Something went wrong, please try again." });
+      }
+    } catch (e) {
+      // Error
+      setButtonText("Sign Up");
+      toastErr({ message: e.message });
+    }
+  };
 
   return (
-    <div className="flex flex-row flex-nowrap min-h-screen">
+    <div className="flex flex-row flex-nowrap min-h-screen overflow-hidden">
       {/* Left Section */}
       <section className="w-1/3 bg-indigo-100 lg:flex flex-col hidden">
         <div className="px-14 py-12 flex flex-col">
@@ -28,11 +64,16 @@ const Signup: React.FC = () => {
             </div>
           </Link>
         </div>
-        <div className="px-14 text-4xl font-sourceSansPro font-extrabold text-indigo-800">
+        <div className="px-14 text-3xl font-sourceSansPro font-extrabold text-indigo-800">
           Connect all of your audience at one place and grow your audience.
         </div>
         <div className="self-center pt-2">
-          <Image src="/static/register-hero.png" height={581} width={446} />
+          <Image
+            src="/static/register-hero.png"
+            height={461}
+            width={376}
+            priority
+          />
         </div>
       </section>
       {/* Right Section */}
@@ -66,16 +107,6 @@ const Signup: React.FC = () => {
 
           <div className="w-full flex flex-col items-stretch pt-7 space-y-5">
             <div className="flex flex-col space-y-2">
-              <span className="font-sourceSansPro font-bold text-lg">Name</span>
-              <TextField
-                type="text"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            </div>
-            <div className="flex flex-col space-y-2">
               <span className="font-sourceSansPro font-bold text-lg">
                 Email Address
               </span>
@@ -108,10 +139,12 @@ const Signup: React.FC = () => {
               <Button
                 varient="primary"
                 hover={false}
-                onClick={() => {}}
+                onClick={() => {
+                  signup();
+                }}
                 className="rounded-xl px-10"
               >
-                Sign Up
+                {buttonText}
               </Button>
             </div>
             <div className="font-sourceSansPro self-center md:hidden block">

@@ -1,45 +1,28 @@
-import { GetServerSideProps } from "next";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import nookies from "nookies";
-import React, { useState } from "react";
-import { Button } from "../components/common/buttons/Button";
-import TextField from "../components/common/buttons/TextField";
-import { FacebookLogo } from "../components/common/icons/social/facebook";
-import { GithubLogo } from "../components/common/icons/social/github";
-import { GoogleLogo } from "../components/common/icons/social/google";
-import { TwitterLogo } from "../components/common/icons/social/twitter";
-import { TempLogo } from "../components/common/icons/tempLogo";
-import { toastErr } from "../helper/toast";
-import { validateEmail, validatePassword } from "../helper/validator";
-import { loginWithEmailPassword } from "../services/auth";
+import { useEffect, useState } from "react";
+import { Button } from "../../components/common/buttons/Button";
+import TextField from "../../components/common/buttons/TextField";
+import { FacebookLogo } from "../../components/common/icons/social/facebook";
+import { GithubLogo } from "../../components/common/icons/social/github";
+import { GoogleLogo } from "../../components/common/icons/social/google";
+import { TwitterLogo } from "../../components/common/icons/social/twitter";
+import { TempLogo } from "../../components/common/icons/tempLogo";
+import { verifyIdToken } from "../../services/firebaseAdmin";
 
-const Signin: React.FC = () => {
+const SignupProcess: React.FC<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ user }) => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
-  const signIn = async () => {
-    if (!validateEmail(email)) {
-      toastErr({ message: "Email invalid" });
-      return;
-    }
-    if (!validatePassword(password)) {
-      return;
-    }
-    try {
-      var user = await loginWithEmailPassword({ email, password });
-      if (user) {
-        console.log(user);
-        router.replace("/home");
-      } else {
-        console.log(`ERROR => ${user}`);
-      }
-    } catch (e) {
-      console.log(`CATCH => ${e}`);
-    }
-  };
+  useEffect(() => {
+    if (!user) router.replace("/signup");
+    if (user?.email_verified) router.replace("/home");
+  }, []);
 
   return (
     <div className="flex flex-row flex-nowrap min-h-screen max-h-screen overflow-hidden">
@@ -100,13 +83,13 @@ const Signin: React.FC = () => {
           <div className="w-full flex flex-col items-stretch pt-7 space-y-5">
             <div className="flex flex-col space-y-2">
               <span className="font-sourceSansPro font-bold text-lg">
-                Email Address
+                Username
               </span>
               <TextField
                 type="text"
-                value={email}
+                value={username}
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setUsername(e.target.value);
                 }}
               />
             </div>
@@ -121,9 +104,9 @@ const Signin: React.FC = () => {
               </div>
               <TextField
                 type="password"
-                value={password}
+                value={username}
                 onChange={(e) => {
-                  setPassword(e.target.value);
+                  setUsername(e.target.value);
                 }}
               />
             </div>
@@ -132,7 +115,7 @@ const Signin: React.FC = () => {
                 varient="primary"
                 hover={false}
                 onClick={() => {
-                  signIn();
+                  // signIn();
                 }}
                 className="rounded-xl px-10"
               >
@@ -158,16 +141,17 @@ const Signin: React.FC = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export default SignupProcess;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   try {
     const cookies = nookies.get(context);
     if (cookies.token) {
-      return {
-        redirect: {
-          destination: "/home",
-          statusCode: 301,
-        },
-      };
+      var user = await verifyIdToken(cookies.token);
+
+      return { props: { user } };
     } else {
       return { props: {} };
     }
@@ -176,5 +160,3 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { props: {} };
   }
 };
-
-export default Signin;

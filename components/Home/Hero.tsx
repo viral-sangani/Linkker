@@ -3,8 +3,8 @@ import { Button } from "../common/buttons/Button";
 
 export default function Hero() {
   return (
-    <div className="max-w-7xl m-auto">
-      <div className="flex flex-row justify-between flex-nowrap w-full items-center pt-28">
+    <div className="max-w-6xl m-auto">
+      <div className="flex flex-row justify-between flex-nowrap w-full items-center pt-10">
         <div className="w-1/2 mr-6">
           <div className="text-8xl font-sourceSansPro font-extrabold text-default-800">
             All your contact at one place.
@@ -13,9 +13,9 @@ export default function Hero() {
             A simple and single tool, helps you to manage, share, short your
             links and playlists.
             <br />
-            <span className="text-default-700">
+            <div className="text-default-700">
               Share with your Audience, Teams, Friends and Families.
-            </span>
+            </div>
             <Button className="mt-10" varient="primary" onClick={() => {}}>
               Get Started
             </Button>
