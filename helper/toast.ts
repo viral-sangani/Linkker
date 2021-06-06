@@ -13,6 +13,7 @@ export const toastInfo = ({ message }: ToastProps) => {
 };
 
 export const toastErr = ({ message }: ToastProps) => {
+  console.log(`message`, message);
   toast.error(message, {
     style: { color: "rgba(255, 0, 0, 0.7)", backgroundColor: "#FFCCCC" },
     className: "bg-red-100 rounded-xl font-sourceSansPro font-bold",

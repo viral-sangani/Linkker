@@ -1,52 +1,33 @@
-import { GetServerSideProps } from "next";
+import firebase from "firebase";
 import { useRouter } from "next/router";
-import nookies from "nookies";
+import { useEffect, useState } from "react";
 import { Button } from "../../components/common/buttons/Button";
-import { HomeIndexProps } from "../../components/common/interfaces";
-import { firebaseSignOut } from "../../services/auth";
-import { verifyIdToken } from "../../services/firebaseAdmin";
+import { useAuth } from "../../services/auth";
 
-// https://nextjs.org/docs/basic-features/data-fetching#typescript-use-getstaticprops
-const HomeIndex = ({ session }: HomeIndexProps) => {
+const HomeIndex = () => {
   const router = useRouter();
+  const { signOut } = useAuth()!;
 
-  const signOut = async () => {
-    await firebaseSignOut();
+  const [user, setUser] = useState<firebase.User | null>(null);
+
+  useEffect(() => {
+    console.log(firebase.auth().currentUser);
+    setUser(firebase.auth().currentUser);
+  });
+
+  const firebaseSignOut = async () => {
+    await signOut();
     router.replace("/");
   };
 
   return (
     <div>
-      {session.uid}
-      <Button varient="primary" onClick={async () => await signOut()}>
+      {user?.email}
+      <Button varient="primary" onClick={async () => await firebaseSignOut()}>
         SignOut
       </Button>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const cookies = nookies.get(context);
-    const user = await verifyIdToken(cookies.token);
-    console.log("user :>> ", user);
-    const { uid, email } = user;
-    return {
-      props: {
-        session: {
-          uid,
-          email,
-        },
-      },
-    };
-  } catch (error) {
-    return {
-      redirect: {
-        destination: "/signin",
-        statusCode: 301,
-      },
-    };
-  }
 };
 
 export default HomeIndex;

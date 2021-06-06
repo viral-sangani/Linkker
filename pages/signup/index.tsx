@@ -12,10 +12,12 @@ import { TempLogo } from "../../components/common/icons/tempLogo";
 import { delay } from "../../helper/helper";
 import { toastErr } from "../../helper/toast";
 import { validateEmail, validatePassword } from "../../helper/validator";
-import { signupWithEmailPassword } from "../../services/auth";
+import { useAuth } from "../../services/auth";
 
 const Signup: React.FC = () => {
   const router = useRouter();
+  const { signupWithEmailPassword } = useAuth()!;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [buttonText, setButtonText] = useState("Sign Up");

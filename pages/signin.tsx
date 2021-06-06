@@ -1,8 +1,6 @@
-import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import nookies from "nookies";
 import React, { useState } from "react";
 import { Button } from "../components/common/buttons/Button";
 import TextField from "../components/common/buttons/TextField";
@@ -13,12 +11,13 @@ import { TwitterLogo } from "../components/common/icons/social/twitter";
 import { TempLogo } from "../components/common/icons/tempLogo";
 import { toastErr } from "../helper/toast";
 import { validateEmail, validatePassword } from "../helper/validator";
-import { loginWithEmailPassword } from "../services/auth";
+import { useAuth } from "../services/auth";
 
 const Signin: React.FC = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { signinWithEmailPassword } = useAuth()!;
 
   const signIn = async () => {
     if (!validateEmail(email)) {
@@ -29,15 +28,15 @@ const Signin: React.FC = () => {
       return;
     }
     try {
-      var user = await loginWithEmailPassword({ email, password });
+      var user = await signinWithEmailPassword({ email, password });
       if (user) {
         console.log(user);
         router.replace("/home");
       } else {
-        console.log(`ERROR => ${user}`);
+        toastErr({ message: "Error, Please try again." });
       }
     } catch (e) {
-      console.log(`CATCH => ${e}`);
+      toastErr({ message: e.message });
     }
   };
 
@@ -156,25 +155,6 @@ const Signin: React.FC = () => {
       </section>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const cookies = nookies.get(context);
-    if (cookies.token) {
-      return {
-        redirect: {
-          destination: "/home",
-          statusCode: 301,
-        },
-      };
-    } else {
-      return { props: {} };
-    }
-  } catch (error) {
-    console.log(error);
-    return { props: {} };
-  }
 };
 
 export default Signin;
