@@ -16,13 +16,13 @@ import { useAuth } from "../../services/auth";
 
 const Signup: React.FC = () => {
   const router = useRouter();
-  const { signupWithEmailPassword } = useAuth()!;
+  const { signupWithEmailPassword, signupWithGoogle } = useAuth()!;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [buttonText, setButtonText] = useState("Sign Up");
 
-  const signup = async () => {
+  const signupEmail = async () => {
     if (!validateEmail(email)) {
       toastErr({ message: "Invalid email, please try again." });
       return;
@@ -48,6 +48,17 @@ const Signup: React.FC = () => {
     } catch (e) {
       // Error
       setButtonText("Sign Up");
+      toastErr({ message: e.message });
+    }
+  };
+
+  const signupGoogle = async () => {
+    console.log("Clicked :>> ");
+    try {
+      var user = await signupWithGoogle();
+      console.log("user :>> ", user);
+      router.push("/signup/process");
+    } catch (e) {
       toastErr({ message: e.message });
     }
   };
@@ -94,7 +105,12 @@ const Signup: React.FC = () => {
 
           {/* Social Icons to login with */}
           <div className="pt-4 flex flex-row space-x-3">
-            <GoogleLogo text="Sign up with Google" />
+            <GoogleLogo
+              text="Sign up with Google"
+              onClick={async () => {
+                await signupGoogle();
+              }}
+            />
             <TwitterLogo />
             <GithubLogo />
             <FacebookLogo />
@@ -142,7 +158,7 @@ const Signup: React.FC = () => {
                 varient="primary"
                 hover={false}
                 onClick={() => {
-                  signup();
+                  signupEmail();
                 }}
                 className="rounded-xl px-10"
               >

@@ -11,45 +11,61 @@ type NextApiRequestWithUser = NextApiRequest & {
 const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
   var tokenRes = await verifyIdToken(req);
   const { mode } = req.query;
-  if (tokenRes) {
-    if (!mode) {
-      const { user } = req.body;
-      await admin
-        .firestore()
-        .collection("users")
-        .doc(tokenRes.uid)
-        .create({
-          uid: user.uid,
-          displayName: user.displayName ?? "",
-          photoURL: user.photoURL ?? "",
-          email: user.email,
-          emailVerified: user.emailVerified,
-          createdAt: user.createdAt,
-          lastLoginAt: user.lastLoginAt,
-          processComplete: false,
-        });
-      res.status(200).json({ success: true });
-    } else if (mode.length > 0 && mode[0] === "process") {
-      const { username, name } = req.body;
-      var doc = await admin
-        .firestore()
-        .collection("users")
-        .where("username", "==", username)
-        .get();
-      console.log(`doc`, doc.empty);
-      if (!doc.empty) {
-        res
-          .status(200)
-          .json({ success: false, message: "Username already exits." });
-      } else {
-        await admin.firestore().collection("users").doc(tokenRes.uid).update({
-          username: username,
-          fullName: name,
-        });
-        res.status(200).json({ success: true });
+  try {
+    if (tokenRes) {
+      if (!mode) {
+        const { user } = req.body;
+        var userDoc = await admin
+          .firestore()
+          .collection("users")
+          .doc(tokenRes.uid)
+          .get();
+        if (!userDoc.exists) {
+          await admin
+            .firestore()
+            .collection("users")
+            .doc(tokenRes.uid)
+            .create({
+              uid: user.uid,
+              displayName: user.displayName ?? "",
+              photoURL: user.photoURL ?? "",
+              email: user.email,
+              emailVerified: user.emailVerified,
+              createdAt: user.createdAt,
+              lastLoginAt: user.lastLoginAt,
+              processComplete: false,
+            });
+          res.status(200).json({ success: true });
+        } else {
+          res.status(200).json({ success: true });
+        }
+      } else if (mode.length > 0 && mode[0] === "process") {
+        const { username, name } = req.body;
+        var doc = await admin
+          .firestore()
+          .collection("users")
+          .where("username", "==", username)
+          .get();
+        console.log(`doc`, doc.empty);
+        if (!doc.empty) {
+          res
+            .status(200)
+            .json({ success: false, message: "Username already exits." });
+        } else {
+          await admin.firestore().collection("users").doc(tokenRes.uid).update({
+            username: username,
+            fullName: name,
+          });
+          res.status(200).json({ success: true });
+        }
       }
+    } else {
+      res
+        .status(401)
+        .json({ error: "Authentication issue, Please login again." });
     }
-  } else {
+  } catch (error) {
+    console.log(`error`, typeof error);
     res
       .status(401)
       .json({ error: "Authentication issue, Please login again." });

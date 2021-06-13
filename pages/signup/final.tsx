@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "../../components/common/buttons/Button";
 import { TempLogo } from "../../components/common/icons/tempLogo";
 import { useAuth } from "../../services/auth";
 
 const Signup: React.FC = () => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
   const { user } = useAuth()!;
 
   return (

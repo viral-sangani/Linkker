@@ -1,12 +1,16 @@
+import { MouseEventHandler } from "react";
+
 interface Props {
   text?: string;
+  onClick?: MouseEventHandler<HTMLDivElement> | undefined;
 }
 
-export const GoogleLogo: React.FC<Props> = ({ text }) => {
+export const GoogleLogo: React.FC<Props> = ({ text, onClick }) => {
   return (
     <div
       className="hover:cursor-pointer transition-colors duration-300 h-10 pl-3 flex flex-nowrap whitespace-nowrap rounded-lg items-center border-2"
       style={{ backgroundColor: "#4285F4", borderColor: "#4285F4" }}
+      onClick={onClick}
     >
       <div className="font-sourceSansPro font-bold text-white pr-2">
         {text ? text : `Sign in with Google`}

@@ -17,9 +17,9 @@ const Signin: React.FC = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signinWithEmailPassword } = useAuth()!;
+  const { signinWithEmailPassword, signinWithGoogle } = useAuth()!;
 
-  const signIn = async () => {
+  const signInEmail = async () => {
     if (!validateEmail(email)) {
       toastErr({ message: "Email invalid" });
       return;
@@ -30,10 +30,23 @@ const Signin: React.FC = () => {
     try {
       var user = await signinWithEmailPassword({ email, password });
       if (user) {
-        console.log(user);
         router.replace("/home");
       } else {
         toastErr({ message: "Error, Please try again." });
+      }
+    } catch (e) {
+      toastErr({ message: e.message });
+    }
+  };
+
+  const signInGoogle = async () => {
+    try {
+      var user = await signinWithGoogle();
+      if (user) {
+        console.log(user);
+        router.replace("/home");
+      } else {
+        toastErr({ message: "No User fuound. Please sign up." });
       }
     } catch (e) {
       toastErr({ message: e.message });
@@ -83,7 +96,11 @@ const Signin: React.FC = () => {
 
           {/* Social Icons to login with */}
           <div className="pt-4 flex flex-row space-x-3">
-            <GoogleLogo />
+            <GoogleLogo
+              onClick={async () => {
+                await signInGoogle();
+              }}
+            />
             <TwitterLogo />
             <GithubLogo />
             <FacebookLogo />
@@ -131,7 +148,7 @@ const Signin: React.FC = () => {
                 varient="primary"
                 hover={false}
                 onClick={() => {
-                  signIn();
+                  signInEmail();
                 }}
                 className="rounded-xl px-10"
               >

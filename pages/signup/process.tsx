@@ -69,7 +69,7 @@ const SignupProcess: React.FC = () => {
                   onChange={(e) => {
                     if (!validateUsername(e.target.value))
                       setUsernameError(
-                        "Username can only contain alphabets, numbers, . and _"
+                        'Username can only contain alphabets, numbers, "_", "."  and "-"'
                       );
                     else setUsernameError("");
                     setUsername(e.target.value);

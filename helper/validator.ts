@@ -10,6 +10,6 @@ export const validatePassword = (password: string) => {
 };
 
 export const validateUsername = (username: string) => {
-  const re = /^[a-zA-Z0-9_.]*$/;
+  const re = /^[a-zA-Z0-9_.-]*$/;
   return re.test(username.toLocaleLowerCase());
 };

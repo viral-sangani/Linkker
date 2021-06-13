@@ -17,6 +17,8 @@ interface AuthContextProps {
   }: SigninProps) => Promise<firebase.auth.UserCredential | null | undefined>;
   signOut: () => Promise<void>;
   signupProcess: (username: string, name: string) => Promise<boolean>;
+  signupWithGoogle: () => Promise<firebase.auth.UserCredential>;
+  signinWithGoogle: () => Promise<any>;
 }
 
 const AuthContext = createContext<AuthContextProps | null>(null);
@@ -47,7 +49,6 @@ export const useProviderAuth = () => {
   const signupWithEmailPassword = async ({
     email,
     password,
-    name,
   }: SignupProps): Promise<firebase.auth.UserCredential> => {
     try {
       var userCred = await firebase
@@ -71,10 +72,33 @@ export const useProviderAuth = () => {
     }
   };
 
+  const signupWithGoogle = async () => {
+    try {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      var userCred = await firebase.auth().signInWithPopup(provider);
+      var token = await firebase.auth().currentUser?.getIdToken();
+      if (token) {
+        var res = await fetch("/api/signup", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            token: token!,
+          },
+          body: JSON.stringify(userCred),
+        });
+        var rawRes = await res.json();
+        if (res.status !== 500 && res.status !== 501) return userCred;
+        else throw rawRes.message;
+      } else throw "Error occured, please try again.";
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const signupProcess = async (username: string, name: string) => {
     try {
       var token = await firebase.auth().currentUser?.getIdToken();
-      console.log(token);
       var res = await fetch("/api/signup/process", {
         method: "POST",
         headers: {
@@ -85,7 +109,6 @@ export const useProviderAuth = () => {
         body: JSON.stringify({ username, name }),
       });
       var rawRes = await res.json();
-      console.log("rawRes :>> ", rawRes.message);
       if (!rawRes.success) throw new Error(rawRes.message);
       else if (res.status !== 500 && res.status !== 501) return true;
       else throw rawRes.message;
@@ -106,6 +129,32 @@ export const useProviderAuth = () => {
       });
   };
 
+  const signinWithGoogle = async () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    var user = await firebase
+      .auth()
+      .signInWithPopup(provider)
+      .catch((error) => {
+        throw error;
+      });
+    var token = await user.user?.getIdToken();
+    var res = await fetch("/api/signin/checkuser", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        token: token!,
+      },
+    });
+    var rawRes = await res.json();
+    if (rawRes.success === true) {
+      return true;
+    } else {
+      signOut();
+      return false;
+    }
+  };
+
   const signOut = async () => {
     return firebase
       .auth()
@@ -118,8 +167,10 @@ export const useProviderAuth = () => {
   return {
     user,
     signOut,
-    signinWithEmailPassword,
+    signupWithGoogle,
     signupWithEmailPassword,
     signupProcess,
+    signinWithEmailPassword,
+    signinWithGoogle,
   };
 };
