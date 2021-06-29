@@ -7,7 +7,7 @@ interface ToastProps {
 export const toastInfo = ({ message }: ToastProps) => {
   toast.error(message, {
     style: { color: "rgba(0, 255, 0, 0.7)" },
-    className: "bg-default-100 rounded-xl font-sourceSansPro font-bold",
+    className: "bg-green-100 rounded-xl font-sourceSansPro font-bold",
     bodyClassName: "text-black",
   });
 };

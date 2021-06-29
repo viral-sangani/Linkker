@@ -42,7 +42,7 @@ const SignupProcess: React.FC = () => {
         <div className="flex flex-col justify-start w-fill md:w-2/3 lg:4/6 pl-10 pr-10">
           <div className="flex lg:hidden flex-row items-center space-x-1 md:space-x-2 lg:space-x-3 pb-10">
             <TempLogo />
-            <span className="font-mono text-default-800 font-bold text-xl">
+            <span className="font-mono text-green-800 font-bold text-xl">
               Linkker
             </span>
           </div>
@@ -119,18 +119,18 @@ const SignupProcess: React.FC = () => {
         </div>
       </section>
       {/* Right Section */}
-      <section className="w-1/3 bg-default-50 lg:flex flex-col hidden">
+      <section className="w-1/3 bg-green-50 lg:flex flex-col hidden">
         <div className="px-14 py-12 flex flex-col">
           <Link href="/">
             <div className="flex flex-row items-center space-x-1 md:space-x-2 lg:space-x-3 hover:cursor-pointer">
               <TempLogo />
-              <span className="font-mono text-default-800 font-bold text-3xl">
+              <span className="font-mono text-green-800 font-bold text-3xl">
                 Linkker
               </span>
             </div>
           </Link>
         </div>
-        <div className="px-14 text-3xl font-sourceSansPro font-extrabold text-default-800">
+        <div className="px-14 text-3xl font-sourceSansPro font-extrabold text-green-800">
           One link for all of your audience. Share it in social medias, cards,
           resumes and anywhere.
         </div>

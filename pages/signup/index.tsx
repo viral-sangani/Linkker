@@ -66,18 +66,18 @@ const Signup: React.FC = () => {
   return (
     <div className="flex flex-row flex-nowrap min-h-screen overflow-hidden">
       {/* Left Section */}
-      <section className="w-1/3 bg-indigo-100 lg:flex flex-col hidden">
+      <section className="w-1/3 bg-blue-100 lg:flex flex-col hidden">
         <div className="px-14 py-12 flex flex-col">
           <Link href="/">
             <div className="flex flex-row items-center space-x-1 md:space-x-2 lg:space-x-3">
               <TempLogo logoColor="#953C22" />
-              <span className="font-mono text-indigo-800 font-bold text-3xl">
+              <span className="font-mono text-blue-800 font-bold text-3xl">
                 Linkker
               </span>
             </div>
           </Link>
         </div>
-        <div className="px-14 text-3xl font-sourceSansPro font-extrabold text-indigo-800">
+        <div className="px-14 text-3xl font-sourceSansPro font-extrabold text-blue-800">
           Connect all of your audience at one place and grow your audience.
         </div>
         <div className="self-center pt-2">
@@ -94,7 +94,7 @@ const Signup: React.FC = () => {
         <div className="flex flex-col justify-start w-fill md:w-2/3 lg:4/6 pl-10 pr-10">
           <div className="flex lg:hidden flex-row items-center space-x-1 md:space-x-2 lg:space-x-3 pb-10">
             <TempLogo />
-            <span className="font-mono text-default-800 font-bold text-xl">
+            <span className="font-mono text-green-800 font-bold text-xl">
               Linkker
             </span>
           </div>

@@ -1,7 +1,9 @@
 import firebase from "firebase";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Button } from "../../components/common/buttons/Button";
+import ActionPanel from "../../components/Home/ActionPanel";
+import { LeftPanel } from "../../components/Home/LeftPanel";
+import MainPanel from "../../components/Home/MainPanel";
 import { useAuth } from "../../services/auth";
 
 const HomeIndex = () => {
@@ -21,12 +23,15 @@ const HomeIndex = () => {
   };
 
   return (
-    <div>
-      {user?.email}
-      <Button varient="primary" onClick={async () => await firebaseSignOut()}>
-        SignOut
-      </Button>
-    </div>
+    <>
+      <div className="flex flex-row min-h-screen">
+        <LeftPanel />
+
+        <ActionPanel />
+
+        <MainPanel />
+      </div>
+    </>
   );
 };
 

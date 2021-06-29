@@ -1,10 +1,10 @@
-import Header from "../components/Home/Header";
-import Hero from "../components/Home/Hero";
+import Header from "../components/Landing/Header";
+import Hero from "../components/Landing/Hero";
 
 export default function Home() {
   return (
     <>
-      <div className="min-h-screen bg-default-50">
+      <div className="min-h-screen bg-green-50">
         <Header />
         <Hero />
       </div>
