@@ -8,19 +8,30 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^1.2.0-e56dd07",
+    "add": "^2.0.6",
     "animate.css": "^4.1.1",
     "firebase": "^8.6.4",
     "firebase-admin": "^9.9.0",
-    "next": "latest",
+    "framer-motion": "^4.1.17",
+    "headlessui": "^0.0.0",
+    "next": "11.0.1",
     "next-firebase-auth": "^0.13.1",
     "nookies": "^2.5.2",
     "react": "^17.0.1",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.1",
+    "react-inline-editing": "^1.0.10",
+    "react-inline-input-edit": "^1.0.2",
     "react-spring": "^9.2.3",
-    "react-toastify": "^7.0.4"
+    "react-switch": "^6.0.0",
+    "react-toastify": "^7.0.4",
+    "recoil": "^0.3.1",
+    "yarn": "^1.22.10"
   },
   "devDependencies": {
     "@types/react": "^17.0.8",
+    "@types/react-beautiful-dnd": "^13.0.0",
     "autoprefixer": "^10.2.6",
     "postcss": "^8.3.0",
     "tailwindcss": "^2.1.2",

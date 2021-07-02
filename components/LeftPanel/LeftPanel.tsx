@@ -3,7 +3,7 @@ import { AnalysisIcons } from "../common/icons/analysis";
 import { MoonIcons } from "../common/icons/moon";
 import { PlusIcons } from "../common/icons/plus";
 import { SettingsIcons } from "../common/icons/settings";
-import LeftPanelItem from "../common/LeftPanelItem";
+import LeftPanelItem from "./LeftPanelItem";
 
 export const LeftPanel: React.FC = () => {
   useEffect(() => {}, []);

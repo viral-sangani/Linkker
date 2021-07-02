@@ -4,6 +4,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      transitionProperty: {
+        height: "height",
+      },
       fontFamily: {
         b612: ["B612", "sans-serif"],
         concertOne: ["Concert One", "cursive"],
@@ -13,8 +16,6 @@ module.exports = {
         sourceSansPro: ["Source Sans Pro"],
       },
       colors: {
-        primary: "#3BB24D",
-        secondary: "#E9F6EC",
         black: "#333232",
         lightBlack: "#757575",
         green: {

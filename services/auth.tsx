@@ -1,10 +1,17 @@
 import firebase from "firebase";
 import "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { userState } from "../store/recoilStore";
 import firebaseClient from "./firebaseClient";
-import { SigninProps, SignupProps, UserModel } from "./props";
-
+import {
+  FirestoreUserModel,
+  SigninProps,
+  SignupProps,
+  UserModel,
+} from "./props";
 interface AuthContextProps {
+  loading: boolean;
   user: UserModel | null;
   signupWithEmailPassword: ({
     email,
@@ -33,16 +40,40 @@ export const AuthProvider: React.FC = ({ children }) => {
 export const useAuth = () => useContext(AuthContext);
 
 export const useProviderAuth = () => {
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<UserModel | null>(null);
+  const [firestoreUserState, setFirestoreUserState] = useRecoilState(userState);
 
   useEffect(() => {
+    setLoading(true);
     return firebase.auth().onAuthStateChanged(async (user) => {
-      if (!user) {
-        setUser(null);
-        return;
-      }
-      var userModel: UserModel = { ...user, processComplete: false };
-      setUser(userModel);
+      if (!user)
+        if (!firebase.auth().currentUser) {
+          setUser(null);
+          setLoading(false);
+          return;
+        }
+
+      var userModel: UserModel = { ...user!, processComplete: false };
+      var docData = await firebase
+        .firestore()
+        .collection("users")
+        .doc(userModel.uid)
+        .get();
+      if (docData.exists) {
+        var firestoreUser: FirestoreUserModel = {
+          displayName: docData.data()!["displayName"],
+          email: docData.data()!["email"],
+          emailVerified: docData.data()!["emailVerified"],
+          photoUrl: docData.data()!["photoUrl"],
+          processComplete: docData.data()!["processComplete"],
+          uid: docData.data()!["id"],
+          username: docData.data()!["username"],
+        };
+        setFirestoreUserState(() => firestoreUser);
+        setUser(userModel);
+        setLoading(false);
+      } else signOut();
     });
   }, []);
 
@@ -165,6 +196,7 @@ export const useProviderAuth = () => {
   };
 
   return {
+    loading,
     user,
     signOut,
     signupWithGoogle,

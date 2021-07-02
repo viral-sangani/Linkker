@@ -3,12 +3,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { Button } from "../../components/common/buttons/Button";
-import TextField from "../../components/common/buttons/TextField";
 import { FacebookLogo } from "../../components/common/icons/social/facebook";
 import { GithubLogo } from "../../components/common/icons/social/github";
 import { GoogleLogo } from "../../components/common/icons/social/google";
 import { TwitterLogo } from "../../components/common/icons/social/twitter";
 import { TempLogo } from "../../components/common/icons/tempLogo";
+import { TextField } from "../../components/common/TextField";
 import { delay } from "../../helper/helper";
 import { toastErr } from "../../helper/toast";
 import { validateEmail, validatePassword } from "../../helper/validator";
@@ -53,10 +53,8 @@ const Signup: React.FC = () => {
   };
 
   const signupGoogle = async () => {
-    console.log("Clicked :>> ");
     try {
       var user = await signupWithGoogle();
-      console.log("user :>> ", user);
       router.push("/signup/process");
     } catch (e) {
       toastErr({ message: e.message });

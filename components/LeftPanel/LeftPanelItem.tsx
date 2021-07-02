@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useBoop from "./hooks/useBoop";
+import useBoop from "../common/hooks/useBoop";
 
 interface Props {
   divId: string;
@@ -17,8 +17,6 @@ const LeftPanelItem: React.FC<Props> = ({
   useEffect(() => {
     const icon = document.querySelector(`#${divId}`);
     const iconTooltip = document.querySelector(`#${tooltipId}`);
-    console.log("icon :>> ", icon);
-    console.log("iconTooltip :>> ", iconTooltip);
 
     icon?.addEventListener("mouseenter", () => {
       console.log("Mouse entered");

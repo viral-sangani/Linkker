@@ -15,6 +15,16 @@ export interface UserModel extends firebase.User {
   processComplete?: boolean;
 }
 
+export interface FirestoreUserModel {
+  displayName: string;
+  email: string;
+  emailVerified: boolean;
+  photoUrl?: string;
+  processComplete: boolean;
+  uid: string;
+  username: string;
+}
+
 export interface UseAdminProps {
   verifyIdToken: (token: string) => Promise<boolean>;
 }

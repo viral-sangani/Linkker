@@ -1,5 +1,5 @@
 import { animated } from "react-spring";
-import useBoop from "./hooks/useBoop";
+import useBoop from "../common/hooks/useBoop";
 
 interface Props {
   title: string;

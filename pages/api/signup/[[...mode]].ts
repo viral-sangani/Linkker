@@ -55,6 +55,7 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
           await admin.firestore().collection("users").doc(tokenRes.uid).update({
             username: username,
             fullName: name,
+            displayName: name,
           });
           res.status(200).json({ success: true });
         }
