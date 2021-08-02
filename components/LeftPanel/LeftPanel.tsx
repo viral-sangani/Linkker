@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useAuth } from "../../services/auth";
 import { AnalysisIcons } from "../common/icons/analysis";
 import { MoonIcons } from "../common/icons/moon";
 import { PlusIcons } from "../common/icons/plus";
@@ -7,9 +8,10 @@ import LeftPanelItem from "./LeftPanelItem";
 
 export const LeftPanel: React.FC = () => {
   useEffect(() => {}, []);
+  const { signOut } = useAuth()!;
 
   return (
-    <div className="w-16 bg-white px-4">
+    <div className="bg-white px-2 md:px-3 lg:px-4 h-screen">
       <div className="flex flex-col justify-between items-center py-5 h-full">
         <div
           className="font-playfair text-3xl text-primary font-bold relative cursor-pointer p-2"
@@ -54,7 +56,12 @@ export const LeftPanel: React.FC = () => {
             Component={SettingsIcons}
           />
         </div>
-        <div className="cursor-pointer">
+        <div
+          className="cursor-pointer"
+          onClick={() => {
+            signOut();
+          }}
+        >
           <img
             src="https://avatars.githubusercontent.com/u/36530381?s=400&u=f5c86dce9b82630cd575e51bf8e201bc1692a75a&v=4"
             className="h-9 w-9 rounded-full "

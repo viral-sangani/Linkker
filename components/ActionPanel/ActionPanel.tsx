@@ -8,7 +8,7 @@ import ActionPanelItem from "./ActionPanelItem";
 const ActionPanel: React.FC = (params) => {
   return (
     <div
-      className="w-80 bg-gray-100 border-gray-200 py-10 flex flex-col"
+      className="w-80 bg-gray-100 border-gray-200 py-10 flex flex-col h-screen"
       style={{ borderLeftWidth: 1, borderRightWidth: 1 }}
     >
       <ActionPanelItem title="My Links" active>

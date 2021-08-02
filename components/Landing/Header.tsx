@@ -6,7 +6,7 @@ export default function Header() {
   const router = useRouter();
   return (
     <div className="flex-auto">
-      <nav className="flex justify-between items-center pt-12 max-w-6xl m-auto">
+      <nav className="flex justify-between items-center pt-12 max-w-6xl mx-10 lg:m-auto">
         <div className="flex flex-row items-center space-x-1 md:space-x-2 lg:space-x-3">
           <TempLogo />
           <span className="font-mono text-green-800 font-bold text-3xl">

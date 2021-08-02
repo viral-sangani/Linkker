@@ -21,7 +21,7 @@ export const UserInfo: React.FC<Props> = () => {
   }, []);
 
   return (
-    <div className="bg-gray-100 py-6 px-5 mt-8 rounded-lg flex flex-row flex-nowrap justify-start items-start space-x-14 w-full">
+    <div className="bg-gray-100 py-6 px-4 lg:mx-5 mt-8 rounded-lg flex flex-col md:flex-row flex-nowrap justify-center md:justify-start items-center md:items-start md:space-x-14 w-full">
       {/* Image Section */}
       <div className="flex flex-col space-y-2 w-4/12 items-center">
         <div className="w-28 h-28">
@@ -48,7 +48,7 @@ export const UserInfo: React.FC<Props> = () => {
       </div>
 
       {/* Name and Des Section */}
-      <div className="w-full flex flex-col justify-start">
+      <div className="flex flex-col justify-start w-full mt-8 md:mt-0 px-2 md:px-0">
         <div className="flex flex-col items-stretch w-full">
           <span className="font-sourceSansPro font-semibold text-base text-gray-600 mb-1">
             Title
@@ -63,7 +63,7 @@ export const UserInfo: React.FC<Props> = () => {
           />
         </div>
 
-        <div className="flex flex-col justify-start w-full mt-5">
+        <div className="flex flex-col justify-center md:justify-start mt-5">
           <span className="font-sourceSansPro font-semibold text-base text-gray-600 mb-1">
             Description
           </span>

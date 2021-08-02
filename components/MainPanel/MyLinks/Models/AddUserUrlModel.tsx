@@ -121,7 +121,7 @@ const AddUserUrlModel: React.FC<Props> = ({ isOpen, closeModal }) => {
                       >
                         <input {...getInputProps()} />
                         <div className="flex flex-col justify-center items-center">
-                          <span className="font-sourceSansPro font-bold text-2xl text-gray-500">
+                          <span className="font-sourceSansPro font-bold text-lg md:text-2xl text-gray-500">
                             Upload custom image for your Link here.
                           </span>
                         </div>

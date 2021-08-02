@@ -96,7 +96,7 @@ const UrlItem: React.FC<Props> = ({ keyId, userUrl }) => {
               />
             </Switch>
           </div>
-          <div className="container items-center px-5 lg:px-8 w-full">
+          <div className="container items-center px-2 md:px-5 lg:px-8 w-full">
             <div className="p-4 mx-auto bg-white border rounded-lg shadow-md w-full">
               <div className="flex items-center py-2 rounded-lg flex-row">
                 <div

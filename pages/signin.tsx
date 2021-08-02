@@ -30,7 +30,7 @@ const Signin: React.FC = () => {
     try {
       var user = await signinWithEmailPassword({ email, password });
       if (user) {
-        router.replace("/home");
+        router.replace("/home/mylink");
       } else {
         toastErr({ message: "Error, Please try again." });
       }

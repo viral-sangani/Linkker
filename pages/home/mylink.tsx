@@ -24,9 +24,11 @@ const HomeIndex = () => {
   if (!loading && user) {
     return (
       <>
-        <div className="flex flex-row min-h-screen">
+        <div className="flex flex-row h-screen">
           <LeftPanel />
-          <ActionPanel />
+          <div className="hidden md:block h-screen">
+            <ActionPanel />
+          </div>
           <MyLinkPanel />
         </div>
       </>

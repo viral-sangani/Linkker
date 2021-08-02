@@ -27,8 +27,8 @@ const Links: React.FC = () => {
         }}
       />
       <span className="font-sourceSansPro font-bold text-2xl mb-2">Links</span>
-      <div className="py-6 px-5 rounded-lg flex flex-col w-full space-y-8">
-        <div className="mx-14 flex flex-row flex-nowrap">
+      <div className="py-6 px-2 md:px-5 rounded-lg flex flex-col w-full space-y-8">
+        <div className="mx-7 md:mx-14 flex flex-row flex-nowrap">
           <Button
             varient="primary"
             hover={false}
