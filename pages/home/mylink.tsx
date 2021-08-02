@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import ActionPanel from "../../components/ActionPanel/ActionPanel";
 import LoadingScreen from "../../components/common/Loading";
-import MainPanel from "../../components/Home/MainPanel";
 import { LeftPanel } from "../../components/LeftPanel/LeftPanel";
+import MyLinkPanel from "../../components/MainPanel/MyLinks/MyLink";
 import { useAuth } from "../../services/auth";
 
 const HomeIndex = () => {
@@ -27,7 +27,7 @@ const HomeIndex = () => {
         <div className="flex flex-row min-h-screen">
           <LeftPanel />
           <ActionPanel />
-          <MainPanel />
+          <MyLinkPanel />
         </div>
       </>
     );

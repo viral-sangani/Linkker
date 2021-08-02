@@ -1,5 +1,6 @@
 module.exports = (phase, { defaultConfig }) => {
   return {
+    images: { domains: ["*"] },
     env: {
       websiteName: "linkker.com",
       NEXT_APP_API_KEY: "AIzaSyB9V81PRAApoUy1HDHY04qyNdq9BIycDMk",

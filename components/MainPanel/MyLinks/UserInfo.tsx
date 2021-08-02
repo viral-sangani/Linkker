@@ -1,12 +1,12 @@
 import Img from "next/image";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import DeafultProfileImage from "../../public/static/default_profile_picture.png";
-import { FirestoreUserModel } from "../../services/props";
-import { userState } from "../../store/recoilStore";
-import { Button } from "../common/buttons/Button";
-import { TextArea } from "../common/TextArea";
-import { TextField } from "../common/TextField";
+import DeafultProfileImage from "../../../public/static/default_profile_picture.png";
+import { FirestoreUserModel } from "../../../services/props";
+import { userState } from "../../../store/recoilStore";
+import { Button } from "../../common/buttons/Button";
+import { TextArea } from "../../common/TextArea";
+import { TextField } from "../../common/TextField";
 
 interface Props {}
 

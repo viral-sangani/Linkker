@@ -1,12 +1,23 @@
+import { useState } from "react";
+
 export const ImageIcon: React.FC = () => {
+  const [color, setColor] = useState("#888888");
   return (
-    <div className="">
+    <div
+      className="w-8 h-8 hover:bg-green-100 rounded-md flex justify-center items-center cursor-pointer"
+      onMouseEnter={() => {
+        setColor("#226504");
+      }}
+      onMouseLeave={() => {
+        setColor("#888888");
+      }}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         style={{ width: 22, height: 22 }}
         fill="none"
         viewBox="0 0 24 24"
-        stroke="#888"
+        stroke={color}
       >
         <path
           strokeLinecap="round"

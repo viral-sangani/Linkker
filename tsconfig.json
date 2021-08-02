@@ -22,7 +22,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "components/common/buttons/prima"
+    "components/common/buttons/prima",
+    "components/MainPanel"
   ],
   "exclude": ["node_modules"]
 }
